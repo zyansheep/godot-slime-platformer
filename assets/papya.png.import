@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/papya.png-766737aa039289dec2f6d2ed9d858fe2.res"
+
+[deps]
+
+source_file="res://assets/papya.png"
+dest_files=[ "res://.import/papya.png-766737aa039289dec2f6d2ed9d858fe2.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5
