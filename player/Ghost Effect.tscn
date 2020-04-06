@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://player/Ghost Effect.gd" type="Script" id=1]
+
+[node name="Ghost" type="Sprite"]
+script = ExtResource( 1 )
+
+[node name="Alpha Timeout" type="Tween" parent="."]
+[connection signal="tween_completed" from="Alpha Timeout" to="." method="_on_Alpha_Timeout_tween_completed"]

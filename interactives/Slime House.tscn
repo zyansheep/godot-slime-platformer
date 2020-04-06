@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/slime-house.png" type="Texture" id=1]
+[ext_resource path="res://assets/light-texture.png" type="Texture" id=2]
+[ext_resource path="res://interactives/House.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Movement Inner"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Movement Outer"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Transition"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 0, 1, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.235294 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="OccluderPolygon2D" id=4]
+polygon = PoolVector2Array( 38, 10, 30, -6, 19.0698, -15.7157, 10, -20, 0, -20, -14, -14, -26, -6, -34, 6, -40, 16, -42, 28, 36, 28, 40, 24, 44, 24, 48, 32, 2, 32, -46, 32, -42, 14, -36, 2, -24, -14, -2, -24, 8, -26, 12, -34, 16, -32, 20, -32, 24, -30, 22, -20, 36, -14, 44, 8, 44, 16, 40, 16 )
+
+[node name="Slime House" type="StaticBody2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 4
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+"anims/Movement Inner" = SubResource( 1 )
+"anims/Movement Outer" = SubResource( 2 )
+anims/Transition = SubResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 48, 30, 40, 24, 34, 30, -12, 30, -16, 26, -32, 26, -36, 22, -36, 10, -20, -8, -8, -16, 2, -20, 10, -20, 12, -20, 12, -24, 16, -20, 26, -12, 32, -2, 36, 8, 38, 16, 44, 16, 46, 10, 42, -2, 36, -14, 24, -22, 26, -30, 10, -34, 8, -28, -24, -16, -36, 0, -46, 20, -46, 28, -46, 30 )
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area"]
+polygon = PoolVector2Array( -36, 8, -22, -12, 6, -24, 28, -16, 38, -4, 46, 10, 48, 30, -44, 30 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 12, 18 )
+scale = Vector2( 0.0903333, 0.0633333 )
+texture = ExtResource( 2 )
+color = Color( 0.905882, 0.729412, 0.0392157, 1 )
+energy = 1.12
+shadow_enabled = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 4 )
+[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
