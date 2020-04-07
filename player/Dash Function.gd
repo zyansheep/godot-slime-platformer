@@ -2,7 +2,7 @@ extends Node
 
 const DASH_SPEED = 200
 const DASH_LENGTH_SQUARED = 2000;
-const NUM_DASH = 2;
+const NUM_DASH = 1;
 
 var block_movement = false
 var block_physics = false
@@ -19,6 +19,10 @@ func can_trigger():
 		return true
 	return false
 
+func sign_flip_h(object):
+	if(object.get_node("Sprite").flip_h): return 1;
+	else: return -1;
+
 func trigger(object):
 	next_dash_registered = false;
 	dash_num_left -= 1;
@@ -26,24 +30,25 @@ func trigger(object):
 	
 	dash_dir = object.input_vector.normalized();
 	if dash_dir.x == 0 && dash_dir.y == 0:
-		var flip_h = object.get_node("Sprite").flip_h;
-		if(flip_h): dash_dir.x = 1;
-		else: dash_dir.x = -1;
+		dash_dir.x = sign_flip_h(object);
 	
 	block_movement = true;
 	block_animation = true;
 	block_physics = true;
 	dash_active = true
+	#Ghost effect
 	object.start_ghost_timer();
+	#Camera shake effect
+	object.camera.shake(0.2, 2, 2)
 
-func halt(object):
+func halt(_object):
 	block_movement = false;
 	block_animation = false;
 	block_physics = false;
 	dash_active = false
 
 func process(object):
-	if Input.is_action_just_pressed("game_dash"):
+	if Input.is_action_just_pressed("game_dash") && dash_num_left > 0:
 		next_dash_registered = true;
 	if object.grounded:
 		dash_num_left = NUM_DASH;
@@ -58,3 +63,4 @@ func process(object):
 			halt(object);
 			pass;
 		object.velocity = dash_dir * DASH_SPEED;
+		

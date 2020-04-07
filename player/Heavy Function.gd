@@ -21,8 +21,7 @@ func process(object):
 		was_grounded = object.grounded;
 	
 	if !was_grounded && object.grounded:
-		object.get_node("Camera2D").shake(0.2, 15, 6)
-		print("shaking: ", object.velocity.y)
+		object.camera.shake(0.2, 15, 6)
 	
 	was_grounded = object.grounded
 	if not object.grounded:

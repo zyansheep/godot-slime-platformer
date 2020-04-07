@@ -1,10 +1,14 @@
 extends StaticBody2D
 
-var is_inside = false;
+var is_inside = true;
 func _ready():
-	$Sprite/AnimationPlayer.play("Movement Outer")
+	if is_inside:
+		$Sprite.frame = 3
+	else:
+		$Sprite/AnimationPlayer.play("Movement Outer")
 
 func _on_Area_body_entered(body):
+	if is_inside: return
 	if body.name == "Slime":
 		is_inside = true;
 		$Sprite/AnimationPlayer.play("Transition");
