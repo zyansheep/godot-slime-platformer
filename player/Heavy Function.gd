@@ -7,17 +7,18 @@ var heavy_active = false;
 var block_animation = true;
 var block_physics = true;
 var block_movement = true;
+var func_name = "Heavy"
 
-func halt(object):
+func halt(_object):
 	heavy_active = false;
-	object.get_node("Sprite/AnimationPlayer").play("Transform Heavy Reverse")
+	#object.get_node("Sprite/AnimationPlayer").play("Transform Heavy Reverse")
 
 var was_grounded = false;
 
 func process(object):
 	if !heavy_active:
 		heavy_active = true;
-		object.get_node("Sprite/AnimationPlayer").play("Transform Heavy")
+		#object.get_node("Sprite/AnimationPlayer").play("Transform Heavy")
 		was_grounded = object.grounded;
 	
 	if !was_grounded && object.grounded:

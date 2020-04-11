@@ -10,6 +10,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Level" parent="." instance=ExtResource( 3 )]
+
 [node name="MenuLayer" type="CanvasLayer" parent="."]
 
 [node name="Pause" parent="MenuLayer" instance=ExtResource( 2 )]
@@ -42,5 +44,3 @@ value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Level" parent="." instance=ExtResource( 3 )]

@@ -3,7 +3,7 @@ extends StaticBody2D
 var is_inside = true;
 func _ready():
 	if is_inside:
-		$Sprite.frame = 3
+		$Sprite/AnimationPlayer.play("Movement Inner")
 	else:
 		$Sprite/AnimationPlayer.play("Movement Outer")
 
@@ -15,7 +15,7 @@ func _on_Area_body_entered(body):
 		
 
 
-func _on_Area_body_exited(body):
+func _on_Area_body_exited(_body):
 	is_inside = false;
 	$Sprite/AnimationPlayer.play_backwards("Transition")
 

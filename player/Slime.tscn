@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://assets/slime.png" type="Texture" id=1]
 [ext_resource path="res://assets/shade.png" type="Texture" id=2]
 [ext_resource path="res://player/Slime.gd" type="Script" id=3]
 [ext_resource path="res://player/Heavy Function.gd" type="Script" id=4]
 [ext_resource path="res://player/Dash Function.gd" type="Script" id=5]
+[ext_resource path="res://player/Normal Function.gd" type="Script" id=6]
+[ext_resource path="res://player/Slime Animations.tres" type="AnimationNodeStateMachine" id=7]
 
 [sub_resource type="Animation" id=1]
-resource_name = "Bounce"
 length = 0.5
+loop = true
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -20,11 +22,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 1, 2, 0 ]
+"values": [ 22, 23, 20 ]
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "Little Bounce"
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -37,11 +38,12 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 1, 0 ]
+"values": [ 22, 20 ]
 }
 
 [sub_resource type="Animation" id=3]
-resource_name = "Transform Heavy"
+length = 2.0
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -49,14 +51,81 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 0, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+"values": [ 20, 21 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../CollisionShape2D:polygon")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ PoolVector2Array( -1, 7, -4, 4, -4, -4, -1, -7, 5, -7, 7, -5, 7, 5, 5, 7 ) ]
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "Transform Heavy Reverse"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 14, 15, 16, 17, 18, 19, 20 ]
+}
+
+[sub_resource type="Animation" id=5]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 20, 19, 18, 17, 16, 15, 14, 0 ]
+}
+
+[sub_resource type="Animation" id=6]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 24 ]
+}
+
+[sub_resource type="Animation" id=7]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 13 ]
+}
+
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -67,10 +136,119 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 12, 11, 10, 9, 8, 7, 6, 5, 4, 0 ]
+"values": [ 0, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
 }
 
+[sub_resource type="Animation" id=9]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 13, 12, 11, 10, 9, 8, 7, 6, 5, 0 ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 3, 0 ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 0 ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../CollisionShape2D:polygon")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ PoolVector2Array( -1, 7, -4, 4, -4, -4, -1, -7, 5, -7, 7, -5, 7, 5, 5, 7 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="AnimationNodeTimeScale" id=14]
+
+[sub_resource type="AnimationNodeBlendTree" id=15]
+graph_offset = Vector2( -56, 5 )
+nodes/animations/node = ExtResource( 7 )
+nodes/animations/position = Vector2( 40, 70 )
+nodes/output/position = Vector2( 560, 100 )
+nodes/timescale/node = SubResource( 14 )
+nodes/timescale/position = Vector2( 370, 70 )
+node_connections = [ "output", 0, "timescale", "timescale", 0, "animations" ]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+
 [node name="Slime" type="KinematicBody2D"]
+z_index = 2
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
@@ -80,13 +258,37 @@ polygon = PoolVector2Array( -1, 7, -4, 4, -4, -4, -1, -7, 5, -7, 7, -5, 7, 5, 5,
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 flip_h = true
-hframes = 20
+hframes = 25
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
-anims/Bounce = SubResource( 1 )
-"anims/Little Bounce" = SubResource( 2 )
-"anims/Transform Heavy" = SubResource( 3 )
-"anims/Transform Heavy Reverse" = SubResource( 4 )
+root_node = NodePath("../../Sprite")
+"anims/Dash Bounce" = SubResource( 1 )
+"anims/Dash Bounce Little" = SubResource( 2 )
+"anims/Dash Idle" = SubResource( 3 )
+"anims/Dash Transform" = SubResource( 4 )
+"anims/Dash Transform Reverse" = SubResource( 5 )
+"anims/Dash Wall" = SubResource( 6 )
+"anims/Heavy Idle" = SubResource( 7 )
+"anims/Heavy Transform" = SubResource( 8 )
+"anims/Heavy Transform Reverse" = SubResource( 9 )
+"anims/Normal Bounce" = SubResource( 10 )
+"anims/Normal Bounce Little" = SubResource( 11 )
+"anims/Normal Idle" = SubResource( 12 )
+"anims/Normal Wall" = SubResource( 13 )
+
+[node name="AnimationTree" type="AnimationTree" parent="Sprite"]
+tree_root = SubResource( 15 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/animations/playback = SubResource( 16 )
+parameters/animations/Dash/playback = SubResource( 17 )
+parameters/animations/Heavy/playback = SubResource( 18 )
+parameters/animations/Normal/playback = SubResource( 19 )
+parameters/timescale/scale = 1.0
+
+[node name="Normal Function" type="Node" parent="."]
+script = ExtResource( 6 )
 
 [node name="Dash Function" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -105,4 +307,12 @@ texture_scale = 0.22
 shadow_enabled = true
 shadow_color = Color( 1, 1, 1, 0 )
 shadow_gradient_length = 2.0
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="Ghost Timer" to="." method="_on_Ghost_Timer_timeout"]

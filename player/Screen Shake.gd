@@ -11,23 +11,27 @@ var _previous_x = 0.0
 var _previous_y = 0.0
 var _last_offset = Vector2(0, 0)
 
-var target_node = null;
 var smoothing = true;
-var move_speed = 400;
-const MIN_SPEED = 50;
+export(NodePath) var target_node_path;
+var target_node : Node = null;
+export var track_speed = 50;
 
 func _ready():
-	#set_process(true)
-	pass
+	$Animation.play("Beginning")
 
 # Shake with decreasing intensity while there's time remaining.
+var previous_target_node_path = target_node_path;
 func _process(delta):
+	if target_node_path != previous_target_node_path:
+		target_node = get_node(target_node_path)
+	previous_target_node_path = target_node_path;
 	#Camera movement
 	if target_node != null:
-		move_speed = max(target_node.velocity.length(), MIN_SPEED);
+		var move_speed = max(target_node.velocity.length(), track_speed);
 		if smoothing:
 			position = position.move_toward(target_node.position, delta * move_speed)
 		else: position = target_node.position;
+		
 	
 	# Only shake when there's shake time remaining.
 	if _timer != 0:

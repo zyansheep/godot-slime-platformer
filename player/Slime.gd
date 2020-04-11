@@ -1,8 +1,5 @@
 extends KinematicBody2D
 
-func _ready():
-	pass
-
 const MAX_FALL_SPEED = 250
 const MAX_GROUND_SPEED = 100;
 const JUMP_FORCE = 150
@@ -20,31 +17,68 @@ var on_wall = false;
 var in_wall_jump = false
 var no_friction_frames = 0
 var no_movement_frames = 30
-var wall_stamina = 100;
+#var wall_stamina = 100;
+
+var is_morphing = false;
 
 var frames_since_jump_attempt = 0
-
 var input_vector = Vector2.ZERO;
-
 
 onready var dash = get_node("Dash Function")
 onready var heavy = get_node("Heavy Function")
+onready var normal = get_node("Normal Function")
 #onready var magic = get_node("Magic Function")
-var state = 0
-onready var states = [dash, heavy]
 
-onready var camera = get_node("../Camera");
+#handle for Slime scripts to access camera functions
+onready var camera = get_node("../Camera")
 
+onready var states = {
+	"Dash": dash,
+	"Heavy": heavy,
+	"Normal": normal
+}
+var state_cycle_dict = {
+	"Normal": "Dash",
+	"Dash": "Heavy",
+	"Heavy": "Dash"
+}
+var cur_state
+
+onready var anim_tree = $Sprite/AnimationTree
+var playback : AnimationNodeStateMachinePlayback
+var spawn_pos;
+func _ready():
+	spawn_pos = position;
+	cur_state = states[Data.Slime.State]
+	playback = $Sprite/AnimationTree.get("parameters/animations/playback")
+	playback.start(Data.Slime.State)
+	#anim_tree.active = true;
+
+func respawn():
+	position = spawn_pos
+	camera.position = position
+	playback.start(Data.Slime.State)
+	change_state(Data.Slime.State)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	#Process current ability every frame (e.g. dash, magic, heavy)
-	states[state].process(self)
+	var current_animation = playback.get_current_node()
 	
+	#Process current ability every frame (e.g. dash, magic, heavy)
+	cur_state.process(self)
+	
+	#Used for pausing certain processes
 	no_friction_frames -= 1
 	no_movement_frames -= 1
 	
-	if not states[state].block_movement:
+	#Dev respawn point
+	#if Input.is_key_pressed(KEY_S):
+		#spawn_pos = position;
+	
+	#if Input.is_action_just_pressed("game_next_level"):
+		#position = get_node("../Interactive/Next Level").position
+	
+	if not cur_state.block_movement:
 		input_vector = Vector2(
 			Input.get_action_strength("game_right") - Input.get_action_strength("game_left"),
 			Input.get_action_strength("game_down") - Input.get_action_strength("game_up"))
@@ -53,6 +87,7 @@ func _physics_process(delta):
 		#Movement acceleration
 		if input_vector != Vector2.ZERO && no_movement_frames <= 0:
 			velocity.x = clamp(velocity.x + input_vector.x * ACCELERATION * delta, -MAX_GROUND_SPEED, MAX_GROUND_SPEED)
+		
 		#Movement deceleration
 		elif grounded: 
 			var p_delta = FRICTION * delta
@@ -63,19 +98,21 @@ func _physics_process(delta):
 		frames_since_jump_attempt += 1; #Allow jump registering a certain number of frames before hitting the ground
 		if Input.is_action_just_pressed("game_jump"): frames_since_jump_attempt = 0;
 		if grounded && (frames_since_jump_attempt <= 2):
+			#print(cur_state.func_name, " vs ", Data.Slime.State, " vs ", current_animation)
+			if Data.Slime.State != current_animation:
+				playback.start(Data.Slime.State)
 			velocity.y -= 15000 * delta
 		
 		#Wall Jump code
 		if on_wall && !grounded && frames_since_jump_attempt <= 2:
 			velocity = WALL_JUMP_VELOCITY
 			velocity.x = abs(velocity.x) * -dash.sign_flip_h(self)
-			
 			$Sprite.flip_h = !$Sprite.flip_h
 			in_wall_jump = true
 			no_movement_frames = 15
 			no_friction_frames = 30
 		
-	if not states[state].block_physics:
+	if not cur_state.block_physics:
 		#Gravitational force
 		if !on_wall:
 			velocity.y = clamp(velocity.y + GRAVITY * delta, -1000, MAX_FALL_SPEED);
@@ -87,14 +124,26 @@ func _physics_process(delta):
 			var p_delta = AIR_FRICTION * delta
 			if abs(velocity.x) <= p_delta: velocity.x = 0
 			else: velocity.x = velocity.x + -sign(velocity.x) * p_delta
-	
+		
 	if Input.is_action_just_pressed("game_morph"):
+		playback.travel(state_cycle_dict[cur_state.func_name] + " Transform")
+		
+		anim_tree.set("parameters/timescale/scale", 40)
 		Engine.time_scale = 0.1;
-		change_state((state+1)%states.size()) #Cycle through states
-		$Sprite/AnimationPlayer.playback_speed = 20
-	if Input.is_action_just_released("game_morph"):
-		$Sprite/AnimationPlayer.playback_speed = 1
-		Engine.time_scale = 1;
+		is_morphing = true;
+		
+	if is_morphing && !Input.is_action_pressed("game_morph"):
+		var animation_state = current_animation.split(" ")[0]
+		#anim_tree.set("parameters/timescale/scale", 4)
+		if animation_state != "Reverse":
+			playback.travel(animation_state)
+			change_state(animation_state)
+			anim_tree.set("parameters/timescale/scale", 2)
+			Engine.time_scale = 1;
+		if current_animation.split(" ").size() == 1:
+			is_morphing = false;
+			anim_tree.set("parameters/timescale/scale", 1)
+		
 	
 	#Move Character
 	var old_velocity = velocity;
@@ -105,32 +154,33 @@ func _physics_process(delta):
 	if grounded: in_wall_jump = false
 	on_wall = is_on_wall();
 	
-	if not states[state].block_animation:
+	if not cur_state.block_animation:
 		if Input.is_action_pressed("game_left"): $Sprite.flip_h = false;
 		if Input.is_action_pressed("game_right"): $Sprite.flip_h = true;
 		
 		#Animations
 		if was_grounded == false && grounded == true:
 			if old_velocity.y > MAX_FALL_SPEED-1:
-				$Sprite/AnimationPlayer.play("Bounce")
-				$Sprite.frame = 0
+				play_state_animation("Bounce")
 			elif old_velocity.y > 100:
-				$Sprite/AnimationPlayer.play("Little Bounce")
-				$Sprite.frame = 0
+				play_state_animation("Bounce Little")
 		
 		#Just went on wall this frame
 		if !was_on_wall && on_wall && !grounded:
-			$Sprite.frame = 3;
-			velocity.y = 0
+			play_state_animation("Wall")
+			#velocity.y = 0
 		#just left wall this frame
 		elif was_on_wall && !on_wall:
-			$Sprite.frame = 0;
-		
-	
+			play_state_animation("Idle")
 
-func change_state(num):
-	states[state].halt(self);
-	state = num;
+func play_state_animation(name):
+	var state_playback = $Sprite/AnimationTree.get("parameters/animations/" + cur_state.func_name + "/playback")
+	state_playback.travel(name)
+
+func change_state(key : String):
+	cur_state.halt(self);
+	cur_state = states[key];
+	Data.Slime.State = key
 
 #GHOST EFFECT
 const NUM_GHOSTS = 3 #only 3 afterimages

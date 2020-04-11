@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/slime-house.png" type="Texture" id=1]
+[ext_resource path="res://assets/veined-rock.png" type="Texture" id=1]
 [ext_resource path="res://assets/light-texture.png" type="Texture" id=2]
 [ext_resource path="res://interactives/House.gd" type="Script" id=3]
 
@@ -73,7 +73,7 @@ script = ExtResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 4
-frame = 3
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 "anims/Movement Inner" = SubResource( 1 )

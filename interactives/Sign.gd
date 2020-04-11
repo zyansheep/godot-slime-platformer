@@ -13,7 +13,7 @@ func _ready():
 
 func _on_Sign_body_entered(body):
 	if body.name != "Slime": return
-	if body.states[body.state] == body.heavy:
+	if body.cur_state == body.heavy:
 		$Sprite.frame = 1;
 	if $Sprite.frame == 1: return;
 	label.visible_characters = 0
@@ -21,7 +21,7 @@ func _on_Sign_body_entered(body):
 	$"Type Delay".start()
 
 
-func _on_Sign_body_exited(body):
+func _on_Sign_body_exited(_body):
 	label.visible = false
 
 func _on_Type_Delay_timeout():

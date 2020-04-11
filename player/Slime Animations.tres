@@ -1,0 +1,159 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=42 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "Dash Transform"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "Dash Bounce Little"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "Dash Bounce"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "Dash Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Dash Wall"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachine" id=12]
+states/Bounce/node = SubResource( 3 )
+states/Bounce/position = Vector2( 163.5, 92.9688 )
+"states/Bounce Little/node" = SubResource( 2 )
+"states/Bounce Little/position" = Vector2( 513, 92.9375 )
+states/Idle/node = SubResource( 4 )
+states/Idle/position = Vector2( 326, 93 )
+states/Wall/node = SubResource( 5 )
+states/Wall/position = Vector2( 325.688, 180 )
+transitions = [ "Idle", "Bounce", SubResource( 6 ), "Bounce", "Idle", SubResource( 7 ), "Idle", "Bounce Little", SubResource( 8 ), "Bounce Little", "Idle", SubResource( 9 ), "Idle", "Wall", SubResource( 10 ), "Wall", "Idle", SubResource( 11 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "Heavy Transform"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "Heavy Idle"
+
+[sub_resource type="AnimationNodeStateMachine" id=15]
+states/Idle/node = SubResource( 14 )
+states/Idle/position = Vector2( 349.5, 115.5 )
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "Normal Bounce Little"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "Normal Bounce"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "Normal Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "Normal Wall"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=26]
+states/Bounce/node = SubResource( 17 )
+states/Bounce/position = Vector2( 145, 83.375 )
+"states/Bounce Little/node" = SubResource( 16 )
+"states/Bounce Little/position" = Vector2( 436, 83.25 )
+states/Idle/node = SubResource( 18 )
+states/Idle/position = Vector2( 283.5, 83.5 )
+states/Wall/node = SubResource( 19 )
+states/Wall/position = Vector2( 285.25, 184 )
+transitions = [ "Idle", "Wall", SubResource( 20 ), "Wall", "Idle", SubResource( 21 ), "Bounce", "Idle", SubResource( 22 ), "Idle", "Bounce", SubResource( 23 ), "Idle", "Bounce Little", SubResource( 24 ), "Bounce Little", "Idle", SubResource( 25 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "Dash Transform Reverse"
+
+[sub_resource type="AnimationNodeAnimation" id=28]
+animation = "Heavy Transform Reverse"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
+[resource]
+states/Dash/node = SubResource( 12 )
+states/Dash/position = Vector2( 101.176, 258.931 )
+"states/Dash Transform/node" = SubResource( 1 )
+"states/Dash Transform/position" = Vector2( 101.109, 139.297 )
+states/Heavy/node = SubResource( 15 )
+states/Heavy/position = Vector2( 486.58, 259.072 )
+"states/Heavy Transform/node" = SubResource( 13 )
+"states/Heavy Transform/position" = Vector2( 488.5, 138.594 )
+states/Normal/node = SubResource( 26 )
+states/Normal/position = Vector2( 101.242, 62.7977 )
+"states/Reverse Dash Transform/node" = SubResource( 27 )
+"states/Reverse Dash Transform/position" = Vector2( 242.75, 197.197 )
+"states/Reverse Heavy Transform/node" = SubResource( 28 )
+"states/Reverse Heavy Transform/position" = Vector2( 558.5, 198.02 )
+transitions = [ "Dash Transform", "Reverse Dash Transform", SubResource( 29 ), "Reverse Dash Transform", "Heavy Transform", SubResource( 30 ), "Heavy Transform", "Reverse Heavy Transform", SubResource( 31 ), "Reverse Heavy Transform", "Dash Transform", SubResource( 32 ), "Reverse Dash Transform", "Dash Transform", SubResource( 33 ), "Reverse Heavy Transform", "Heavy Transform", SubResource( 34 ), "Normal", "Dash Transform", SubResource( 35 ), "Reverse Heavy Transform", "Normal", SubResource( 36 ), "Reverse Dash Transform", "Normal", SubResource( 37 ), "Heavy Transform", "Heavy", SubResource( 38 ), "Heavy", "Reverse Heavy Transform", SubResource( 39 ), "Dash Transform", "Dash", SubResource( 40 ), "Dash", "Reverse Dash Transform", SubResource( 41 ) ]
+graph_offset = Vector2( -202.477, -25.9919 )

@@ -7,6 +7,7 @@ const NUM_DASH = 1;
 var block_movement = false
 var block_physics = false
 var block_animation = false
+var func_name = "Dash"
 
 var dash_start_pos = Vector2(0,0);
 var dash_num_left = 0;

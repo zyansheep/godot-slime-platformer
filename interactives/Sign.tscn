@@ -12,6 +12,8 @@ font_data = ExtResource( 3 )
 
 [node name="Sign" type="Area2D"]
 script = ExtResource( 1 )
+Text = "REPLACE TEXT
+HERE"
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -37,14 +39,12 @@ text
 here"
 align = 1
 valign = 2
-percent_visible = -0.1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Type Delay" type="Timer" parent="."]
 wait_time = 0.01
-[connection signal="area_entered" from="." to="." method="_on_Sign_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Sign_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Sign_body_exited"]
 [connection signal="timeout" from="Type Delay" to="." method="_on_Type_Delay_timeout"]
