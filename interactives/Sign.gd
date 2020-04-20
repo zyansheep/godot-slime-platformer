@@ -21,8 +21,10 @@ func _on_Sign_body_entered(body):
 	$"Type Delay".start()
 
 
-func _on_Sign_body_exited(_body):
+func _on_Sign_body_exited(body):
+	if body.name != "Slime": return
 	label.visible = false
+	print("Body Exited")
 
 func _on_Type_Delay_timeout():
 	if label.visible_characters < label.text.length():

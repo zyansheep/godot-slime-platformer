@@ -23,6 +23,7 @@ func process(object):
 	
 	if !was_grounded && object.grounded:
 		object.camera.shake(0.2, 15, 6)
+		$"Heavy SFX".play()
 	
 	was_grounded = object.grounded
 	if not object.grounded:

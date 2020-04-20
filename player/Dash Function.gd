@@ -41,6 +41,7 @@ func trigger(object):
 	object.start_ghost_timer();
 	#Camera shake effect
 	object.camera.shake(0.2, 2, 2)
+	$"Dash SFX".play();
 
 func halt(_object):
 	block_movement = false;

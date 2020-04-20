@@ -60,6 +60,9 @@ func respawn():
 	playback.start(Data.Slime.State)
 	change_state(Data.Slime.State)
 
+func _process(delta):
+	pass;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	var current_animation = playback.get_current_node()
@@ -131,6 +134,8 @@ func _physics_process(delta):
 		anim_tree.set("parameters/timescale/scale", 40)
 		Engine.time_scale = 0.1;
 		is_morphing = true;
+		$TransformAudio.play();
+		
 		
 	if is_morphing && !Input.is_action_pressed("game_morph"):
 		var animation_state = current_animation.split(" ")[0]
@@ -143,6 +148,8 @@ func _physics_process(delta):
 		if current_animation.split(" ").size() == 1:
 			is_morphing = false;
 			anim_tree.set("parameters/timescale/scale", 1)
+			$TransformAudio.stop();
+		
 		
 	
 	#Move Character
@@ -160,6 +167,7 @@ func _physics_process(delta):
 		
 		#Animations
 		if was_grounded == false && grounded == true:
+			$Particles2D.emitting = true
 			if old_velocity.y > MAX_FALL_SPEED-1:
 				play_state_animation("Bounce")
 			elif old_velocity.y > 100:
@@ -172,6 +180,10 @@ func _physics_process(delta):
 		#just left wall this frame
 		elif was_on_wall && !on_wall:
 			play_state_animation("Idle")
+
+func play_sound(name):
+	$MainAudio.stream = load("res://assets/" + name + ".wave")
+	$MainAudio.play()
 
 func play_state_animation(name):
 	var state_playback = $Sprite/AnimationTree.get("parameters/animations/" + cur_state.func_name + "/playback")
