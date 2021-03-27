@@ -11,6 +11,7 @@ const AIR_FRICTION = 300;
 
 const WALL_JUMP_VELOCITY = Vector2(100, -270);
 
+var old_velocity = Vector2.ZERO;
 var velocity = Vector2.ZERO;
 var grounded = false;
 var on_wall = false;
@@ -75,11 +76,11 @@ func _physics_process(delta):
 	no_movement_frames -= 1
 	
 	#Dev respawn point
-	#if Input.is_key_pressed(KEY_S):
-		#spawn_pos = position;
+	if Input.is_key_pressed(KEY_S):
+		spawn_pos = position;
 	
-	#if Input.is_action_just_pressed("game_next_level"):
-		#position = get_node("../Interactive/Next Level").position
+	if Input.is_action_just_pressed("game_next_level"):
+		position = get_node("../Interactive/Next Level").position
 	
 	if not cur_state.block_movement:
 		input_vector = Vector2(
@@ -153,13 +154,20 @@ func _physics_process(delta):
 		
 	
 	#Move Character
-	var old_velocity = velocity;
+	old_velocity = velocity;
 	velocity = move_and_slide(velocity, Vector2(0,-1))
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.name == "Death":
+			respawn()
+		
 	var was_grounded = grounded;
 	var was_on_wall = on_wall;
 	grounded = is_on_floor();
 	if grounded: in_wall_jump = false
 	on_wall = is_on_wall();
+	
+	
 	
 	if not cur_state.block_animation:
 		if Input.is_action_pressed("game_left"): $Sprite.flip_h = false;

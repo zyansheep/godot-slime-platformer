@@ -1,14 +1,19 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://levels/Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/Normal_TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://interactives/Next Level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://levels/Death_TileSet.tres" type="TileSet" id=4]
+[ext_resource path="res://levels/Level4.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/shade.png" type="Texture" id=6]
 [ext_resource path="res://player/Camera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://levels/Level Loader.gd" type="Script" id=9]
 [ext_resource path="res://player/Slime.tscn" type="PackedScene" id=12]
 
-[sub_resource type="Animation" id=1]
-resource_name = "Beginning"
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 25, 24 )
+
+[sub_resource type="Animation" id=2]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:target_node_path")
@@ -60,21 +65,35 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Death" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -720877, 1073741824, 0, -720876, 1073741824, 0, -720875, 1073741824, 0, -720874, 1073741824, 0, -720873, 1073741824, 0, -720872, 1073741824, 0, -720871, 1073741824, 0, -720870, 1073741824, 0, -720869, 1073741824, 0, -720868, 1073741824, 0, -720867, 1073741824, 0, -720866, 1073741824, 0, -720865, 1073741824, 0, -720864, 1073741824, 0, -720863, 1073741824, 0, -720862, 1073741824, 0, -720861, 1073741824, 0, -720860, 1073741824, 0, -720859, 1073741824, 0, -720858, 1073741824, 0, -720857, 1073741824, 0, -720856, 1073741824, 0, -720855, 1073741824, 0, -720854, 1073741824, 0, -720853, 1073741824, 0, -720851, 1073741824, 0, -720850, 1073741824, 0, -720849, 1073741824, 0, -720826, 0, 0, -655310, 0, 0, -589802, 0, 0, -589801, 0, 0, -589800, 0, 0, -589790, 0, 0, -589789, 0, 0, -589788, 0, 0, -589779, 0, 0, -589778, 0, 0, -589777, 0, 0, -589769, 0, 0, -589768, 0, 0, -589767, 0, 0, -589766, 0, 0, -589762, 0, 0, -589756, 0, 0, -589752, 0, 0, -524227, -1073741824, 0, -458691, -1073741824, 0, -458686, 0, 0, -393155, -1073741824, 0 )
+
 [node name="Interactive" type="Node2D" parent="."]
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Next Level" parent="Interactive" instance=ExtResource( 3 )]
-position = Vector2( 1300, -151 )
+position = Vector2( 1300, -153 )
+next_level = ExtResource( 5 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Interactive/Next Level"]
+position = Vector2( 26, 0 )
+shape = SubResource( 1 )
 
 [node name="Lights" type="Node2D" parent="."]
 __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Light2D" type="Light2D" parent="Lights"]
+position = Vector2( 747, -216 )
+texture = ExtResource( 6 )
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color( 0.32549, 0.235294, 0.235294, 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -82,9 +101,13 @@ __meta__ = {
 
 [node name="Camera" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1163, -143 )
+target_node_path = NodePath("../Slime")
+track_speed = 400
 
-[node name="Animation" type="AnimationPlayer" parent="Camera"]
-anims/Beginning = SubResource( 1 )
+[node name="CameraAnimation" parent="Camera" index="0"]
+"anims/Pasted Animation" = SubResource( 2 )
 
 [node name="Slime" parent="." instance=ExtResource( 12 )]
-position = Vector2( 191, -151 )
+position = Vector2( 207, -153 )
+
+[editable path="Camera"]

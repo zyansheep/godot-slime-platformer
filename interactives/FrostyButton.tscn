@@ -7,7 +7,7 @@
 extents = Vector2( 16, 5 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 16, 4 )
+extents = Vector2( 16, 21 )
 
 [node name="FrostyButton" type="StaticBody2D"]
 script = ExtResource( 2 )
@@ -21,6 +21,7 @@ hframes = 2
 shape = SubResource( 1 )
 
 [node name="Area" type="Area2D" parent="."]
+position = Vector2( 0, -13 )
 __meta__ = {
 "_edit_group_": true
 }

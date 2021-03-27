@@ -1,7 +1,6 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/slime.png" type="Texture" id=1]
-[ext_resource path="res://assets/shade.png" type="Texture" id=2]
 [ext_resource path="res://player/Slime.gd" type="Script" id=3]
 [ext_resource path="res://player/Heavy Function.gd" type="Script" id=4]
 [ext_resource path="res://player/Dash Function.gd" type="Script" id=5]
@@ -9,7 +8,6 @@
 [ext_resource path="res://player/Slime Animations.tres" type="AnimationNodeStateMachine" id=7]
 [ext_resource path="res://assets/Smash.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/Dash.wav" type="AudioStream" id=9]
-[ext_resource path="res://assets/Transform.wav" type="AudioStream" id=10]
 
 [sub_resource type="Animation" id=1]
 length = 0.5
@@ -297,14 +295,6 @@ stream = ExtResource( 8 )
 wait_time = 0.1
 autostart = true
 
-[node name="Light2D" type="Light2D" parent="."]
-visible = false
-texture = ExtResource( 2 )
-texture_scale = 0.22
-shadow_enabled = true
-shadow_color = Color( 1, 1, 1, 0 )
-shadow_gradient_length = 2.0
-
 [node name="Label" type="Label" parent="."]
 visible = false
 margin_right = 40.0
@@ -314,7 +304,6 @@ __meta__ = {
 }
 
 [node name="TransformAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 position = Vector2( 0, 5 )

@@ -1,6 +1,6 @@
 extends Node
 
-const HEAVY_WEIGHT = 20;
+const HEAVY_WEIGHT = 25;
 
 var heavy_active = false;
 
@@ -21,9 +21,12 @@ func process(object):
 		#object.get_node("Sprite/AnimationPlayer").play("Transform Heavy")
 		was_grounded = object.grounded;
 	
-	if !was_grounded && object.grounded:
-		object.camera.shake(0.2, 15, 6)
+	if object.old_velocity.y >= object.MAX_FALL_SPEED && object.grounded:
+		var val = clamp(range_lerp(object.old_velocity.y, 250,700, 0,100), 0,100)
+		object.camera.shake(0.2, range_lerp(val, 0,100,0,15), range_lerp(val, 0,100,0,6))
+		$"Heavy SFX".volume_db = range_lerp(val, 0,100,-30,0);
 		$"Heavy SFX".play()
+		print(val)
 	
 	was_grounded = object.grounded
 	if not object.grounded:

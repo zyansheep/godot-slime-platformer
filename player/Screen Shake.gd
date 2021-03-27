@@ -17,7 +17,7 @@ var target_node : Node = null;
 export var track_speed = 50;
 
 func _ready():
-	$Animation.play("Beginning")
+	$CameraAnimation.play("Beginning")
 
 # Shake with decreasing intensity while there's time remaining.
 var previous_target_node_path = target_node_path;
