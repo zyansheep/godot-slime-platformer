@@ -67,7 +67,6 @@ __meta__ = {
 
 [node name="Next Level" parent="Interactive" instance=ExtResource( 3 )]
 position = Vector2( 258, -94 )
-next_level = null
 
 [node name="Lights" type="Node2D" parent="."]
 __meta__ = {

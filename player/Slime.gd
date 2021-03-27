@@ -61,7 +61,7 @@ func respawn():
 	playback.start(Data.Slime.State)
 	change_state(Data.Slime.State)
 
-func _process(delta):
+func _process(_delta):
 	pass;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -80,7 +80,9 @@ func _physics_process(delta):
 		spawn_pos = position;
 	
 	if Input.is_action_just_pressed("game_next_level"):
-		position = get_node("../Interactive/Next Level").position
+		var next_level = get_node_or_null("../Interactive/Next Level")
+		if next_level:
+			position = next_level.position
 	
 	if not cur_state.block_movement:
 		input_vector = Vector2(

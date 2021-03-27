@@ -3,7 +3,7 @@
 [ext_resource path="res://levels/Normal_TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/Death_TileSet.tres" type="TileSet" id=2]
 [ext_resource path="res://interactives/Next Level.tscn" type="PackedScene" id=3]
-[ext_resource path="res://levels/LevelTemplate.tscn" type="PackedScene" id=4]
+[ext_resource path="res://levels/LevelFin.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World.gd" type="Script" id=5]
 [ext_resource path="res://player/Camera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://levels/Level Loader.gd" type="Script" id=9]

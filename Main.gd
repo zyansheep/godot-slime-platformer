@@ -2,7 +2,8 @@ extends Node2D
 
 func _input(_event):
 	if Input.is_key_pressed(KEY_R):
-		get_tree().reload_current_scene()
+		var error = get_tree().reload_current_scene()
+		if error: print("Error Reloading Scene:", error)
 
 func next_level(level_resource):
 	print("Next Level")
