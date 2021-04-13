@@ -1,11 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://levels/Normal_TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/Death_TileSet.tres" type="TileSet" id=2]
+[ext_resource path="res://interactives/FrostyButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://interactives/Torch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World.gd" type="Script" id=5]
 [ext_resource path="res://interactives/Sign.tscn" type="PackedScene" id=6]
 [ext_resource path="res://player/Camera.tscn" type="PackedScene" id=7]
+[ext_resource path="res://levels/Secret.gd" type="Script" id=8]
 [ext_resource path="res://levels/Level Loader.gd" type="Script" id=9]
 [ext_resource path="res://player/Slime.tscn" type="PackedScene" id=12]
 
@@ -93,5 +95,12 @@ anims/Beginning = SubResource( 1 )
 
 [node name="Slime" parent="." instance=ExtResource( 12 )]
 position = Vector2( 153, -26 )
+
+[node name="Secret" type="Node2D" parent="."]
+script = ExtResource( 8 )
+
+[node name="FrostyButton" parent="." instance=ExtResource( 3 )]
+position = Vector2( 192, 284 )
+[connection signal="pressed" from="FrostyButton" to="Secret" method="_on_FrostyButton_pressed"]
 
 [editable path="Camera"]
