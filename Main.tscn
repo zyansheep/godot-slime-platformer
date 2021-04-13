@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Label.gd" type="Script" id=1]
 [ext_resource path="res://menu/Pause.tscn" type="PackedScene" id=2]
 [ext_resource path="res://levels/Level1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=5]
@@ -44,3 +45,13 @@ value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="MenuLayer"]
+visible = false
+margin_right = 38.0
+margin_bottom = 14.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="show_fps" from="MenuLayer/Pause" to="MenuLayer/Label" method="_on_Pause_show_fps"]
