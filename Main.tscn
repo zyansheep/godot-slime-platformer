@@ -54,4 +54,5 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="show_fps" from="MenuLayer/Pause" to="MenuLayer/Label" method="_on_Pause_show_fps"]
